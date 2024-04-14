@@ -1,7 +1,12 @@
 {
   "name": "se-bookkeeping",
+  "description": "SEBookkeeping (Self-Employed Bookkeeping) is an application that allows a bookkeeper to manage the accounting of self-employed people",
+  "author": {
+    "name": "Jose Abadia",
+    "email": "jravalug@gmail.com"
+  },
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "scripts": {
     "dev": "next dev",
     "build": "next build",

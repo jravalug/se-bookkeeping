@@ -2,32 +2,37 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+@layer base {
+  #root {
+    @apply h-full;
   }
-}
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
+  html,
+  body {
+    @apply h-full;
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+    @apply select-none;
+
+    @apply bg-transparent;
+
+    @apply antialiased text-white;
+
+    @apply overflow-hidden;
+
+    @apply bg-slate-800;
+  }
+
+  #titlebar-draggable {
+    display: block;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    -webkit-app-region: drag;
+  }
+  button,
+  a {
+    -webkit-app-region: no-drag;
   }
 }

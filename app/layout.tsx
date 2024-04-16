@@ -1,20 +1,20 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-import TitleBar from "./ui/titlebar";
+import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
+import './globals.css'
+import TitleBar from './ui/titlebar'
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: "SEBookkeeping",
+  title: 'SEBookkeeping',
   description:
-    "SEBookkeeping (Self-Employed Bookkeeping) is an application that allows a bookkeeper to manage the accounting of self-employed people",
-};
+    'SEBookkeeping (Self-Employed Bookkeeping) is an application that allows a bookkeeper to manage the accounting of self-employed people'
+}
 
 const RootLayout = ({
-  children,
+  children
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) => {
   return (
     <html lang="es">
@@ -23,7 +23,7 @@ const RootLayout = ({
         {children}
       </body>
     </html>
-  );
-};
+  )
+}
 
-export default RootLayout;
+export default RootLayout

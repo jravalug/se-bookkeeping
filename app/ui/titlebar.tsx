@@ -1,5 +1,4 @@
 import { SlLayers } from 'react-icons/sl'
-import { join } from 'path'
 import { VscChromeClose, VscChromeMaximize, VscChromeMinimize } from 'react-icons/vsc'
 
 export const ContentLeft = () => {
@@ -9,10 +8,6 @@ export const ContentLeft = () => {
     </div>
   )
 }
-
-
-
-
 
 export const ContentCenter = () => {
   return (

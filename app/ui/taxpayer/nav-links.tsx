@@ -65,7 +65,7 @@ const NavLinks = () => {
       </div>
       <div>
         <NavLink
-          href="/settings"
+          href="/taxpayer/settings"
           label={'Settings'}
           icon={Icon.Settings}
         />

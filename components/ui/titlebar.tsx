@@ -56,7 +56,8 @@ const TitleBar = ({ ...props }) => {
       className={`absolute top-0 h-10 w-full bg-slate-900`}
       {...props}
     >
-      <div className="h-10 flex flex-row text-sky-200/70 text-sm overflow-hidden">
+      <div className="h-10 flex flex-row text-[color:rgb(112,153,194)] text-sm overflow-hidden">
+        {/* 1b2637 */}
         <div className="flex items-center flex-grow flex-shrink w-full h-full overflow-hidden select-none justify-start">
           <div id="titlebar-draggable"></div>
           <ContentLeft />

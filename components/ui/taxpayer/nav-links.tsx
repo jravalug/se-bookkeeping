@@ -1,6 +1,6 @@
 'use client'
 
-import * as Icon from '@ui/icons'
+import * as Icon from '@components/icons'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { twMerge } from 'tailwind-merge'

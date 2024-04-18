@@ -1,12 +1,12 @@
 import { ThemeProvider } from '@/components/theme-provider'
+import '@/styles/globals.css'
 import TitleBar from '@components/ui/titlebar'
-import '@styles/globals.css'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter as FontSans } from 'next/font/google'
 
 // const inter = Inter({ subsets: ['latin'] })
 
-const inter = Inter({
+const fontSans = FontSans({
   subsets: ['latin'],
   variable: '--font-sans'
 })
@@ -23,15 +23,18 @@ const RootLayout = ({
   children: React.ReactNode
 }>) => {
   return (
-    <html lang="es">
-      <body className={inter.className}>
-        <ThemeProvider>
-          <TitleBar
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          />
+    <html
+      lang="es"
+      suppressHydrationWarning
+    >
+      <body className={fontSans.variable}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <TitleBar />
           {children}
         </ThemeProvider>
       </body>

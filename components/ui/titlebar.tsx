@@ -1,5 +1,6 @@
 import { SlLayers } from 'react-icons/sl'
 import { VscChromeClose, VscChromeMaximize, VscChromeMinimize } from 'react-icons/vsc'
+import { ModeToggle } from './mode-toggle'
 
 export const ContentLeft = () => {
   return (
@@ -19,6 +20,7 @@ export const ContentRight = () => {
   return (
     <div className="flex items-center h-full grow-[2] justify-end min-w-min order-2 w-[20%]">
       <div className="flex justify-end flex-grow-0 flex-shrink-0 relative text-center z-[2500] h-full ml-auto min-w-7">
+        <ModeToggle />
         <button
           className="hover:bg-slate-600/50 px-[18px]"
           title="Settings"
@@ -51,7 +53,7 @@ export const ContentRight = () => {
 const TitleBar = ({ ...props }) => {
   return (
     <header
-      className={`absolute top-0 h-10 w-full bg-slate-900/20`}
+      className={`absolute top-0 h-10 w-full bg-slate-900`}
       {...props}
     >
       <div className="h-10 flex flex-row text-sky-200/70 text-sm overflow-hidden">

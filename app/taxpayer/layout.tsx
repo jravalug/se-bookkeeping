@@ -1,4 +1,4 @@
-import SideNav from '@ui/taxpayer/sidenav'
+import SideNav from '@components/ui/taxpayer/sidenav'
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (

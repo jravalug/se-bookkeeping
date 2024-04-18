@@ -5,7 +5,23 @@ import { useTheme } from 'next-themes'
 import Image from 'next/image'
 
 export default function Home() {
-  const { theme } = useTheme()
+  const { resolvedTheme } = useTheme()
+
+  console.log(resolvedTheme)
+
+  let heroSrc
+
+  switch (resolvedTheme) {
+    case 'light':
+      heroSrc = '/images/hero.png'
+      break
+    case 'dark':
+      heroSrc = '/images/hero-dark.png'
+      break
+    default:
+      heroSrc = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
+      break
+  }
 
   const onclick = () => {
     /* TODO:  */
@@ -35,14 +51,7 @@ export default function Home() {
         </div>
         <div className="flex items-center justify-center md:w-1/2">
           <Image
-            src="/images/hero.png"
-            width={1000}
-            height={760}
-            className="block sm:hidden"
-            alt="Screenshots of the dashboard project showing desktop version"
-          />
-          <Image
-            src={`/images/hero${theme === 'dark' ? '-dark' : ''}.png`}
+            src={heroSrc}
             width={560}
             height={620}
             className="hidden md:block"

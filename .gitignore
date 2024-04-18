@@ -37,3 +37,5 @@ next-env.d.ts
 
 # other files
 sheats.md
+/public/designs
+/public/images/ignore

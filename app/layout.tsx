@@ -1,9 +1,15 @@
+import { ThemeProvider } from '@/components/theme-provider'
+import TitleBar from '@components/ui/titlebar'
+import '@styles/globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import './globals.css'
-import TitleBar from './ui/titlebar'
 
-const inter = Inter({ subsets: ['latin'] })
+// const inter = Inter({ subsets: ['latin'] })
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-sans'
+})
 
 export const metadata: Metadata = {
   title: 'SEBookkeeping',
@@ -19,8 +25,15 @@ const RootLayout = ({
   return (
     <html lang="es">
       <body className={inter.className}>
-        <TitleBar />
-        {children}
+        <ThemeProvider>
+          <TitleBar
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   )

@@ -28,9 +28,15 @@
       "@app/*": [
         "./app/*"
       ],
-      "@ui/*": [
-        "./app/ui/*"
+      "@components/*": [
+        "./components/*"
       ],
+      "@lib/*": [
+        "./lib/*"
+      ],
+      "@styles/*": [
+        "./styles/*"
+      ]
     }
   },
   "include": [

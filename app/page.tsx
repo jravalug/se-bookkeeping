@@ -9,26 +9,15 @@ export default function Home() {
 
   console.log(resolvedTheme)
 
-  let heroSrc
-
-  switch (resolvedTheme) {
-    case 'light':
-      heroSrc = '/images/hero.png'
-      break
-    case 'dark':
-      heroSrc = '/images/hero-dark.png'
-      break
-    default:
-      heroSrc = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
-      break
-  }
+  const heroExt = '.avif'
+  const heroSrc = '/images/hero' + (resolvedTheme !== 'light' ? '-dark' : '') + heroExt
 
   const onclick = () => {
     /* TODO:  */
   }
 
   return (
-    <main className="flex h-screen items-center justify-center md:p-24">
+    <main className="absolute flex h-[calc(100dvh-40px)] items-center justify-center md:p-24 container top-10">
       <Card className="flex grow flex-col gap-4 md:flex-row rounded-lg border px-6 py-10 md:px-10 max-w-4xl bg-card shadow">
         <div className="flex flex-col justify-center gap-5 md:w-1/2 ">
           <h1 className={`text-xl md:text-3xl text-primary md:leading-normal antialiased`}>
@@ -55,7 +44,7 @@ export default function Home() {
             width={560}
             height={620}
             className="hidden md:block"
-            alt="Screenshots of the dashboard project showing desktop version"
+            alt="Ilustration of bookkeeping working."
           />
         </div>
       </Card>

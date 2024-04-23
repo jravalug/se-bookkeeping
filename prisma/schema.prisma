@@ -1,0 +1,335 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["views"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Enum Models
+
+model Activity {
+  code              String            @unique
+  name              String            @unique
+
+  selfEmployed      SelfEmployed[]
+  employees         Employee[]
+
+  @@id([code, name])
+  @@map("enum_activities")
+}
+
+model PaymentType {
+  name              String            @id
+
+  incomes           Income[]
+  expenses          Expense[]
+
+  @@map("enum_payment_types")
+}
+
+model PaymentMethod {
+  name              String            @id
+
+  taxes             Tax[]
+  taxLateFees       TaxLateFee[]
+
+  @@map("enum_payment_methods")
+}
+
+model IncomeType {
+  name              String            @id
+
+  incomes           Income[]
+
+  @@map("enum_income_types")
+}
+
+model IncomeActivity {
+  name              String            @id
+
+  incomes           Income[]
+
+  @@map("enum_income_activities")
+}
+
+model ExpenseSubAccount {
+  acronym           String            @id
+  name              String            @unique
+
+  expenseConcepts   ExpenseConcept[]
+  expenses          Expense[]
+
+  @@map("enum_expense_sub_accounts")
+}
+
+model ExpenseConcept {
+  code              String            @id
+  name              String            @unique
+  subAccount        ExpenseSubAccount @relation(fields: [subAccountAcronym], references: [acronym])
+  subAccountAcronym String
+
+  expenseItems      ExpenseItem[]
+  expenses          Expense[]
+
+  @@map("enum_expense_concepts")
+}
+
+model ExpenseItem {
+  code              String
+  name              String            @unique
+  concept           ExpenseConcept    @relation(fields: [conceptName], references: [name])
+  conceptName       String
+
+  expenses          Expense[]
+
+  @@id([code, name])
+  @@map("enum_expense_items")
+}
+
+model AverageSalary {
+  id                Int               @id @default(autoincrement())
+  value             Float
+  update            DateTime
+
+  payrolls          Payroll[]
+
+  @@map("enum_average_salaries")
+}
+
+model TaxType {
+  paragraph         String            @unique
+  name              String            @unique
+  paymentPeriod     Int
+  percentage        Float
+  specs             String?
+
+  Taxes             Tax[]
+
+  @@id([paragraph, name])
+  @@map("enum_tax_types")
+}
+
+// Entities Models
+
+model SelfEmployed {
+  id                String            @id
+  nit               String
+  name              String
+  surnames          String
+  phone             String?           @unique
+  cellPhone         String?           @unique
+  email             String?           @unique
+  streetOrAvenue    String
+  number            String
+  apt               String?
+  district          String?
+  municipality      String            @default("Camagüey")
+  province          String            @default("Camagüey")
+  zoneCode          String?
+  startOfOperations DateTime
+  activity          Activity          @relation(fields: [activityCode,activityName], references: [code,name])
+  activityCode      String
+  activityName      String
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  active            Boolean           @default(true)
+  endOfOperations   DateTime?
+  createdById       Int
+  createdBy         User              @relation(fields: [createdById], references: [id])
+
+  business          Business[]
+  incomes           Income[]
+  expenses          Expense[]
+  invoices          Invoice[]
+  employees         Employee[]
+  payrolls          Payroll[]
+  taxes             Tax[]
+  taxLateFees       TaxLateFee[]
+
+  @@map("self_employeds")
+}
+
+model Business {
+  id                Int               @id @default(autoincrement())
+  name              String
+  ownerId           String
+  owner             SelfEmployed      @relation(fields: [ownerId], references: [id])
+  streetOrAvenue    String
+  number            String
+  apt               String?
+  district          String?
+  municipality      String            @default("Camagüey")
+  province          String            @default("Camagüey")
+  zoneCode          String?
+  startOfOperation  DateTime
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+
+  @@map("businesses")
+}
+
+model Income {
+  id                Int               @id @default(autoincrement())
+  incomeDate        DateTime
+  incomeType        IncomeType        @relation(fields: [incomeTypeId], references: [name])
+  incomeTypeId      String
+  incomeActivity    IncomeActivity    @relation(fields: [incomeActivityId], references: [name])
+  incomeActivityId  String
+  paymentType       PaymentType       @relation(fields: [paymenTypeId], references: [name])
+  paymenTypeId      String
+  amount            Float
+  description       String?
+  selfEmployedId    String
+  selfEmployed      SelfEmployed      @relation(fields: [selfEmployedId], references: [id])
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+
+  @@map("incomes")
+}
+
+model Expense {
+  id                Int               @id @default(autoincrement())
+  invoiceId         Int?
+  invoice           Invoice?          @relation(fields: [invoiceId], references: [id])
+  expenseDate       DateTime
+  expenseSubAccount ExpenseSubAccount @relation(fields: [expenseSubAccountAcronym], references: [acronym])
+  expenseSubAccountAcronym String
+  expenseConcept    ExpenseConcept    @relation(fields: [expenseConceptName], references: [name])
+  expenseConceptName  String
+  expenseItem       ExpenseItem       @relation(fields: [expenseItemName], references: [name])
+  expenseItemName   String
+  paymentType       PaymentType       @relation(fields: [paymentTypeId], references: [name])
+  paymentTypeId     String
+  amount            Float
+  description       String?
+  hasInvoice        Boolean           @default(false)
+  selfEmployedId    String
+  selfEmployed      SelfEmployed      @relation(fields: [selfEmployedId], references: [id])
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+
+  @@map("expenses")
+}
+
+model Invoice {
+  id                Int               @id  @default(autoincrement())
+  invoiceNumber     String
+  invoiceDate       DateTime
+  totalAmount       Float
+  exchangeRate      Int               @default(1)
+  amountAfterChange Float
+  remainingAmount   Float
+  hasApportionment  Boolean           @default(false)
+  invoiceImage      String?
+  selfEmployedId    String
+  selfEmployed      SelfEmployed      @relation(fields: [selfEmployedId], references: [id])
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+
+  expenses          Expense[]
+
+  @@map("invoices")
+}
+
+model Employee {
+  id                String            @id
+  name              String
+  surename          String
+  familyHelp        Boolean           @default(false)
+  municipality      String            @default("Camagüey")
+  hireDate          DateTime
+  isActive          Boolean           @default(true)
+  departureDate     DateTime?
+  activity          Activity?         @relation(fields: [activityCode,activityName], references: [code,name])
+  activityCode      String?
+  activityName      String?
+  employerId        String
+  employer          SelfEmployed      @relation(fields: [employerId], references: [id])
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+
+  Payrolls          Payroll[]
+
+  @@map("employees")
+}
+
+model Payroll {
+  id                Int               @id @default(autoincrement())
+  payrollDate       DateTime
+  employeeId        String
+  employee          Employee          @relation(fields: [employeeId], references: [id])
+  salary            Float
+  withholding       Float?
+  bonuses           Float?
+  netSalary         Float
+  avarageSalaryId   Int
+  averageSalary     AverageSalary     @relation(fields: [avarageSalaryId], references: [id])
+  consideredForTax  Float
+  employerId        String
+  employer          SelfEmployed      @relation(fields: [employerId], references: [id])
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+
+  @@map("payrolls")
+}
+
+model Tax {
+  id                Int               @id @default(autoincrement())
+  code              String
+  taxType           TaxType           @relation(fields: [taxTypeId], references: [paragraph])
+  taxTypeId         String
+  dateToPay         DateTime
+  amountToPay       Float?
+  paymentDate       DateTime?
+  paymentMethod     PaymentMethod     @relation(fields: [paymentMethodId], references: [name])
+  paymentMethodId   String
+  transaction       String?
+  discount          Float?
+  totalPaid         Float?
+  taxpayer          SelfEmployed      @relation(fields: [taxpayerId], references: [id])
+  taxpayerId        String
+  status            String
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+
+  taxLateFees       TaxLateFee?
+
+  @@map("taxes")
+}
+
+model TaxLateFee {
+  id                Int               @id @default(autoincrement())
+  tax               Tax               @relation(fields: [taxId], references: [id])
+  taxId             Int               @unique
+  delay             Int
+  amountToPay       Float
+  paymentDate       DateTime?
+  paymentMethod     PaymentMethod     @relation(fields: [paymentMethodId], references: [name])
+  paymentMethodId   String
+  transaction       String?
+  discount          Float?
+  totalPaid         Float?
+  taxpayerId        String
+  taxpayer          SelfEmployed      @relation(fields: [taxpayerId], references: [id])
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+
+  @@map("tax_late_fees")
+}
+
+model User {
+  id                Int               @id @default(autoincrement())
+  name              String
+  surename          String
+  username          String
+  password          String
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+
+  clients           SelfEmployed[]
+
+  @@map("users")
+}

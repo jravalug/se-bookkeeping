@@ -1,0 +1,211 @@
+﻿code;name
+A;Agricultura, ganadería, silvicultura y pesca
+B;Explotación de minas y canteras
+C;Industrias manufactureras
+D;Suministro de electricidad, gas vapor y aire acond
+E;"Suministro agua; evac. aguas resid, gest desechos"
+F;Construcción
+G;"Com. al por mayor y al por menor; Rep. Veh y motoc"
+H;Transporte y almacenamiento
+I;Actividades de alojamiento y de serv. de comida
+J;Información y comunicaciones
+K;Actividades financieras y de seguros
+L;Actividades inmobiliarias
+M;Actividades profesionales, científicas y técnicas
+N;Actividades servicios administrativos y de apoyo
+O;"Adm. pública y defensa; Planes de seg. social"
+P;Educación
+Q;Act. de atención de la salud hum y de asist social
+R;Act. artísticas, de entretenimiento y recreativas
+S;Otras actividades de servicios
+T;"Act. de los hogares como empleadores; Act no difer"
+U;Act de organizaciones y órganos extraterritoriales
+001;Estomatólogo
+002;Médico dental
+006;Veterinario
+0149;Cría de Otros Animales
+101;Arriero y boyero
+102;Pescador comercial
+103;Carretillero/vendedor producto agrop. ambulatoria
+110;Reparador equipo mecánico y combustión
+112;Mensajero
+116;Fregador engrasador de equipo automotor
+121;Ponchero
+122;Instructor de automovilismo
+124;Parq, cuidador de ciclos, triciclos y otros eq aut
+201;Albañil
+202;Carpintero
+203;Cerrajero
+204;Electricista
+205;Herrero
+207;Plomero
+209;Masillero
+210;Cristalero
+211;Techador
+213;Oper  arrendador de equipos para la producc art
+214;Agentes de selección de elencos (Casting)
+215;Auxiliar de producción artística
+303;Elaborador vendedor de carbón
+304;Molinero
+305;Construcción, mtto. y reparación de pozos y fosas
+307;Trillador
+310;Florista
+311;Criador o cuid. de animales para alquiler, comerc.
+313;Tostador
+314;Leñador
+315;Reparador de cercas y caminos
+316;Desmochador de palmas
+317;Prod. vend. de basto, paño y montura, arreo, etc
+318;Herrador animales/prod. vend. herraduras y clavos
+401;Afinador y reparador de instrumentos musicales
+406;Fotógrafo
+407;Limpiabotas
+408;Servicios de belleza
+409;Mecanógrafo
+410;Modista o sastre
+412;Plasticador
+413;Relojero
+418;Zapatero remendón
+419;Productor y/o vendedor de calzado
+425;Mecánico de equipos de refrigeración
+426;Pulidor de metales
+428;Constructor vendedor o montador antena radio y TV
+429;Reparador de artículos de joyería y bisutería
+432;Servicios domésticos
+435;Cuidador de enfermo, persona c/ discap. y anciano
+438;Asist. p/ la atención educativa y cuidado de niños
+439;Sereno o portero
+440;Productor vendedor de accesorios de goma
+441;Elaborador vendedor de vinos
+442;Quiropedista
+444;Elaborador vendedor de jabón, betún y tintas
+447;Reparador de artículos varios
+448;Encargado, limpiador y operador de bombas de agua
+449;Profesor taquig., mecanografía, e idioma
+450;Profesor de música y otras artes
+501;Aguador
+502;Amolador
+503;Serv decoración, organ. cumpleaños y otras act fes
+505;Jardinero
+507;Operador de audio
+510;Reparador de equipos eléctricos y electrónicos
+512;Tapicero
+516;Productor vendedor de artículos fundidos
+517;Productor o vendedor de artículos varios
+519;Servicio de Chapistería MTSS
+601;Artesano
+604;Recolector vendedor de recursos naturales
+605;Pintor de bienes muebles e inmuebles
+606;Recolector vendedor hierbas med. o p/ alim. animal
+607;Programador de equipo de cómputo
+608;Hojalatero
+610;Soldador
+611;Servicio de chapistería UET
+612;Tornero
+613;Enrollador de motor, bobina y otros equipos
+614;Talabartero
+615;Recolector vendedor de materia prima
+622;Traductor e interprete certificado
+623;Serv. paseo coche, uso infantil, tracción animal
+625;Curtidor de pieles
+626;Restaurador de obras de arte
+627;Cobrador pagador
+628;Productor vendedor de figuras de yeso
+630;Comprador vendedor libros de uso o encuadernador
+632;Restaurador de muñecos y otros juguetes
+634;Comprador vendedor de discos
+636;Traductor de documentos
+637;Productor vendedor piñatas y otros art. similares
+638;Operador de equipos de recreación
+639;Aserrador
+641;Instructor de gimnasio de musculación
+642;Rotulista o grabador
+643;Servicio gastronómico en cafetería
+645;Servicio gastronómico en restaurante
+648;Productor vendedor de art. de alfarería
+649;Productor vendedor materiales fines constructivos
+650;Productor vendedor de productos alimenticios
+651;Cuidador de baños públicos, taquillas y parques
+654;Figura costumbrista
+656;Prod./vend. art. religiosos u otros recursos
+657;Repasador
+658;Tenedor de libro
+659;Gestor de pasajeros en piquera
+660;Elab. vend alim. y bebida no alcoh. forma ambulat.
+663;Agente de seguro
+665;Vendedor mayorista de productos agropecuarios
+666;Vendedor minorista de productos agropecuarios
+667;Anticuario
+668;Facilitador de permuta, compraventa vivienda
+669;Serv. construcción, reparación y mtto de inmueble
+670;Reparador de instrumentos de medición
+671;Gestor de alojamiento
+672;Agente postal
+673;Agente de telecomunicaciones
+674;Reparador montador equipos bombeo de agua
+675;Panadero dulcero
+676;Servicio de bar y recreación
+677;Pelador de frutas naturales
+678;Exhibición de perros amaestrados
+680;Servicios de belleza (MG)
+683;Baño público, taquillas y parques (MG)
+684;Servicio Gastronómico en Cafertería (MG) RS
+684;Servicio gastronómico en cafetería (MG) RS
+685;Servicio gastronómico en restaurante  RS (MG)
+685;Servicios Gastronómicos en Restaurante (MG) RS
+687;Vendedor de producción agrícola en punto de venta
+700;Trabajador Contratado Productores Agropecuarios
+710;Familiar afiliado
+711;Trabajador contratado
+712;Trabajador contratado (contratista privado)
+713;Trabajador contratado de Creadores y Artistas
+777;Propietario de embarcación
+778;Propietario de vivienda o solar yermo
+779;Propietario de tierras agrícolas
+780;Propietario de transporte terreste
+781;Propietario de tierra ociosa
+801;Transporte de carga automotor
+802;Transporte de pasajeros (vehículo ligero)
+803;Transporte de pasajeros (tracción animal)
+804;Transporte pasajeros (incl. camión, tren, embarc.)
+805;Transporte de carga (tracción animal)
+806;Transporte de carga (tracción humana)
+807;Transporte pasajeros (tracción animal) -RS
+808;Transporte pasajeros taxi (MG)
+809;Transporte pasajeros coche Varadero (MG)
+810;Transporte pasajeros ómnibus Varadero (MG)
+811;Transporte pasajeros en moto -Stgo. de Cuba
+812;Transporte pasajeros (tracción humana)
+813;Servicio de taxi rutero
+814;Servicio de taxi libre
+815;Arrendador de autos suplente
+816;Arrendador de medios de transporte
+831;Agricultor pequeño (sector cañero)
+832;Usufructuario de tierra
+833;Apicultor
+8412;Regulación de las actividades de organismos
+871;Artística (cualquier manifestación)
+872;Artista independiente (Registro del Creador)
+873;Gente de mar
+874;Socio de mipyme
+876;Agente o representante firma extranjera
+877;Personal labora sucursal y ent. extranj.
+881;Contrato de trabajo en el exterior
+882;Extranjero con permiso de trabajo
+884;Consultor
+886;Comunicador social y diseñador
+891;Arrendador de vivienda
+892;Arrendador de habitación
+893;Arrendador de espacio
+900;Contratista privado
+902;Convenio de pago (Programa Especial)
+903;Convenio para evitar la doble imposición
+910;Cooperativista no agropecuario
+913;Arrend de viv, habitac y espacios  (Varadero)
+914;Teneduría de libros (Varadero)
+915;Atención educativa y de cuidos de niños (Varadero)
+916;Repaso de estudiantes (Varadero)
+917;Cuidado de enf, pers con discap y ancia (Varadero)
+918;Cuid de baños púb, taquillas y parques (Varadero)
+919;Servicios domésticos (Varadero)
+920;Trab cont por los cread artísticos FCBC(Varadero)

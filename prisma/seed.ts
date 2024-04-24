@@ -1,6 +1,7 @@
-import { PrismaClient } from '@prisma/client'
-import { time, timeEnd } from 'console'
-import * as init from './initData'
+import { PrismaClient } from '@prisma/client';
+import * as bcript from "bcrypt";
+import { time, timeEnd } from 'console';
+import * as init from './initData';
 
 const prisma = new PrismaClient()
 
@@ -59,6 +60,22 @@ const seedingConfig = async () => {
     console.log('     ... seeding table paymentMethod 👍!')
     await prisma.taxType.createMany({
       data: init.taxType
+    })
+    console.log('     ... seeding table taxType 👍!')
+
+
+    const adminUsername = process.env.ADMIN_USERNAME
+    const adminPlainPassword = process.env.ADMIN_PASSWORD
+
+    await prisma.user.createMany({
+      data: [
+        {
+          name: 'Admin',
+          surename: '',
+          username: adminUsername!,
+          password: await bcript.hash(adminPlainPassword!, 10)
+        }
+      ]
     })
     console.log('     ... seeding table taxType 👍!')
 

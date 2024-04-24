@@ -7,7 +7,7 @@
   },
   "version": "0.1.0",
   "prisma": {
-    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} ./prisma/seed.ts"
+    "seed": "cross-env NODE_OPTIONS='--inspect' ts-node --compiler-options {\"module\":\"CommonJS\"} ./prisma/seed.ts"
   },
   "private": false,
   "scripts": {

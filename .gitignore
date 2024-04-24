@@ -37,6 +37,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# databases
+*.db
+
 # other files
 sheats.md
 /public/designs

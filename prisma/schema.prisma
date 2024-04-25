@@ -137,8 +137,8 @@ model SelfEmployed {
   updatedAt         DateTime          @updatedAt
   active            Boolean           @default(true)
   endOfOperations   DateTime?
-  createdById       Int
   createdBy         User              @relation(fields: [createdById], references: [id])
+  createdById       String
 
   business          Business[]
   incomes           Income[]
@@ -321,10 +321,10 @@ model TaxLateFee {
 }
 
 model User {
-  id                Int               @id @default(autoincrement())
+  id                String            @id @default(cuid())
   name              String
   surename          String
-  username          String
+  username          String            @unique
   password          String
   createdAt         DateTime          @default(now())
   updatedAt         DateTime          @updatedAt

@@ -3,6 +3,7 @@ import '@/styles/globals.css'
 import TitleBar from '@components/ui/titlebar'
 import type { Metadata } from 'next'
 import { Inter as FontSans } from 'next/font/google'
+import Providers from './providers'
 
 // const inter = Inter({ subsets: ['latin'] })
 
@@ -35,7 +36,7 @@ const RootLayout = ({
           disableTransitionOnChange
         >
           <TitleBar />
-          {children}
+          <Providers>{children}</Providers>
         </ThemeProvider>
       </body>
     </html>

@@ -20,6 +20,7 @@ export default function FreePassLayout({ children }: { children: React.ReactNode
             height={620}
             className="hidden md:block"
             alt="Ilustration of bookkeeping working."
+            priority
           />
         </div>
       </Card>

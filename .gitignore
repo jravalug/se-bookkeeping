@@ -39,6 +39,7 @@ next-env.d.ts
 
 # databases
 *.db
+/prisma/*.db
 
 # other files
 sheats.md

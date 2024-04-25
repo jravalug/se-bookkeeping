@@ -32,6 +32,9 @@
       "@components/*": [
         "./components/*"
       ],
+      "@prisma/*": [
+        "./prisma/*"
+      ],
       "@lib/*": [
         "./lib/*"
       ],
@@ -48,7 +51,6 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "prisma/csv2json.js"
   ],
   "exclude": [
     "node_modules"

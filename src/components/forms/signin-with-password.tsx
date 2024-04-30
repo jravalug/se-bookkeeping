@@ -16,7 +16,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { useRouter } from 'next/navigation'
-import { toast } from '../use-toast'
+import { toast } from '../ui/use-toast'
 
 const FormSchema = z.object({
   username: z.string().min(2, { message: 'Username must be at least 2 characters.' }),

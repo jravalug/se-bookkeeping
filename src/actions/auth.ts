@@ -1,7 +1,7 @@
 'use server'
 
 import { signIn, signOut } from '@/auth'
-import db from '@prisma/prisma'
+import db from '@/config/db'
 import { AuthError } from 'next-auth'
 
 // Function to find a user by username in the database

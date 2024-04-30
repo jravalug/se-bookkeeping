@@ -1,7 +1,7 @@
-import { ThemeProvider } from '@/components/theme-provider'
+import TitleBar from '@/components/titlebar'
 import { Toaster } from '@/components/ui/toaster'
+import { ThemeProvider } from '@/providers/theme-provider'
 import '@/styles/globals.css'
-import TitleBar from '@components/ui/titlebar'
 import type { Metadata } from 'next'
 import { Inter as FontSans } from 'next/font/google'
 

@@ -1,6 +1,6 @@
 'use client'
 
-import * as Icon from '@components/icons'
+import * as Icon from '@/components/icons'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { twMerge } from 'tailwind-merge'
@@ -20,7 +20,7 @@ interface NavLinkProps {
   label: string
   icon: React.ComponentType<Icon.IconProps>
 }
-
+// TODO: move to data
 const NavLink = ({ href, label, icon }: NavLinkProps) => {
   const pathname = usePathname()
   const LinkIcon = icon
@@ -48,30 +48,32 @@ const NavLink = ({ href, label, icon }: NavLinkProps) => {
   )
 }
 
-const NavLinks = () => {
+const SideNav = () => {
   return (
-    <nav className="h-full flex flex-col justify-between">
-      <div>
-        {links.map(({ href, label, icon }) => {
-          return (
-            <NavLink
-              key={href}
-              href={href}
-              label={label}
-              icon={icon}
-            />
-          )
-        })}
-      </div>
-      <div>
-        <NavLink
-          href="/dashboard/self-employed/settings"
-          label={'Settings'}
-          icon={Icon.Settings}
-        />
-      </div>
-    </nav>
+    <aside className="w-32 moverflow-auto">
+      <nav className="h-full flex flex-col justify-between">
+        <div>
+          {links.map(({ href, label, icon }) => {
+            return (
+              <NavLink
+                key={href}
+                href={href}
+                label={label}
+                icon={icon}
+              />
+            )
+          })}
+        </div>
+        <div>
+          <NavLink
+            href="/dashboard/self-employed/settings"
+            label={'Settings'}
+            icon={Icon.Settings}
+          />
+        </div>
+      </nav>
+    </aside>
   )
 }
 
-export default NavLinks
+export default SideNav

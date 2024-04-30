@@ -12,7 +12,7 @@ import {
 
 export function ModeToggle() {
   const { setTheme } = useTheme()
-
+  // TODO: Change to render a single button with a toggle switch
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

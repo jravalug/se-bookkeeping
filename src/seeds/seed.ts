@@ -1,7 +1,7 @@
+import * as init from '@/data/initData'
 import { PrismaClient } from '@prisma/client'
 import bcript from 'bcryptjs'
 import { time, timeEnd } from 'console'
-import * as init from './initData'
 
 const prisma = new PrismaClient()
 

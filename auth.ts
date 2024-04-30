@@ -1,4 +1,5 @@
 // Importing necessary modules and types
+import { PrismaAdapter } from '@auth/prisma-adapter'
 import type { User } from '@prisma/client'
 import bcrypt from 'bcryptjs'
 import NextAuth from 'next-auth'
@@ -6,6 +7,7 @@ import Credentials from 'next-auth/providers/credentials'
 import { z } from 'zod'
 import { findUserByUsername } from './actions/auth'
 import { authConfig } from './auth.config'
+import db from './prisma/prisma'
 
 // Function to fetch a user by username from the database
 async function getUser(username: string): Promise<User | null> {
@@ -19,7 +21,11 @@ async function getUser(username: string): Promise<User | null> {
 
 // Destructuring NextAuth functions and configuration from the returned object
 export const { auth, signIn, signOut } = NextAuth({
-  ...authConfig, // Merging with the previously defined NextAuth configuration
+  adapter: PrismaAdapter(db),
+
+  session: { strategy: 'jwt' },
+  // Merging with the previously defined NextAuth configuration
+  ...authConfig,
 
   // Defining authentication providers, in this case, using credentials (username and password)
   providers: [
@@ -27,7 +33,7 @@ export const { auth, signIn, signOut } = NextAuth({
       async authorize(credentials) {
         // Parsing and validating incoming credentials using Zod
         const parsedCredentials = z
-          .object({ username: z.string().min(2).max(50), password: z.string().min(6) })
+          .object({ username: z.string().min(2).max(50), password: z.string().min(5) })
           .safeParse(credentials)
 
         if (parsedCredentials.success) {

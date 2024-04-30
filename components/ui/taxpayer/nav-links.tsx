@@ -6,13 +6,13 @@ import { usePathname } from 'next/navigation'
 import { twMerge } from 'tailwind-merge'
 
 const links = [
-  { href: '/taxpayer', label: 'Contribuyente', icon: Icon.Home },
-  { href: '/taxpayer/incomes', label: 'Incomes', icon: Icon.Incomes },
-  { href: '/taxpayer/expenses', label: 'Expenses', icon: Icon.Expenses },
-  { href: '/taxpayer/payroll', label: 'Payroll', icon: Icon.Payroll },
-  { href: '/taxpayer/taxes', label: 'Taxes', icon: Icon.Taxes },
-  { href: '/taxpayer/proration', label: 'Proration', icon: Icon.Proration },
-  { href: '/taxpayer/reports', label: 'Reports', icon: Icon.Reports }
+  { href: '/dashboard/self-employed', label: 'Contribuyente', icon: Icon.Home },
+  { href: '/dashboard/self-employed/incomes', label: 'Incomes', icon: Icon.Incomes },
+  { href: '/dashboard/self-employed/expenses', label: 'Expenses', icon: Icon.Expenses },
+  { href: '/dashboard/self-employed/payroll', label: 'Payroll', icon: Icon.Payroll },
+  { href: '/dashboard/self-employed/taxes', label: 'Taxes', icon: Icon.Taxes },
+  { href: '/dashboard/self-employed/proration', label: 'Proration', icon: Icon.Proration },
+  { href: '/dashboard/self-employed/reports', label: 'Reports', icon: Icon.Reports }
 ]
 
 interface NavLinkProps {
@@ -65,7 +65,7 @@ const NavLinks = () => {
       </div>
       <div>
         <NavLink
-          href="/taxpayer/settings"
+          href="/dashboard/self-employed/settings"
           label={'Settings'}
           icon={Icon.Settings}
         />

@@ -4,15 +4,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { authenticate } from '@/actions/auth'
 import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle
-} from '@/components/ui/card'
 import {
   Form,
   FormControl,
@@ -22,88 +15,115 @@ import {
   FormMessage
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { useRouter } from 'next/navigation'
+import { toast } from '../use-toast'
 
 const FormSchema = z.object({
   username: z.string().min(2, { message: 'Username must be at least 2 characters.' }),
-  password: z.string().min(6, { message: 'Password must be at least 8 characters.' })
+  password: z.string().min(5, { message: 'Password must be at least 5 characters.' })
 })
 
 const LoginForm = () => {
+  // const [error, formAction] = useFormState(authenticate, undefined)
+  // const params = useSearchParams()
+  // const hasAlert = params.get('alert') === 'true'
+  const router = useRouter()
+
   const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema)
+    resolver: zodResolver(FormSchema),
+    defaultValues: {
+      username: '',
+      password: ''
+    },
+    criteriaMode: 'all'
   })
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    // toast({
-    //   title: 'You submitted the following values:',
-    //   description: (
-    //     <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-    //       <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-    //     </pre>
-    //   )
-    // })
-    console.log('testing')
+  // useEffect(() => {
+  //   if (error) {
+  //     toast({
+  //       title: 'Sign in error',
+  //       description: error,
+  //       variant: 'destructive'
+  //     })
+  //   }
+  // }, [error])
+
+  const onSubmit = async (data: z.infer<typeof FormSchema>) => {
+    const formData = new FormData()
+
+    Object.entries(data).forEach(([key, value]) => {
+      formData.append(key, value)
+    })
+
+    const res = await authenticate('credentials', formData)
+    console.log(res)
+
+    if (res) {
+      form.setError('root.serverError', { type: 'authError', message: res })
+      toast({
+        title: 'Sign in error',
+        description: res,
+        variant: 'destructive'
+      })
+    } else {
+      console.log('success')
+
+      router.push('/dashboard')
+    }
   }
 
   return (
-    <>
-      <Card className="w-full max-w-sm  border-none">
-        <CardHeader>
-          <CardTitle className="text-2xl">Login</CardTitle>
-          <CardDescription>Enter your email below to login to your account.</CardDescription>
-        </CardHeader>
-        <CardContent className="grid gap-4">
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="space-y-4"
-            >
-              <FormField
-                control={form.control}
-                name="username"
-                render={({ field }) => (
-                  <FormItem className="grid gap-2">
-                    <FormLabel>Username</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="ani"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem className="grid gap-2">
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="password"
-                        placeholder="******"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </form>
-          </Form>
-        </CardContent>
-        <CardFooter>
-          <Button
-            type="submit"
-            className="w-full"
-          >
-            Sign in
-          </Button>
-        </CardFooter>
-      </Card>
-    </>
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-4 p-6"
+      >
+        {form.formState.errors.root?.serverError.type === 'authError' && (
+          <FormMessage>{form.formState.errors.root?.serverError.message}</FormMessage>
+        )}
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Username</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="username"
+                  autoComplete="current-username"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Password</FormLabel>
+              <FormControl>
+                <Input
+                  type="password"
+                  placeholder="******"
+                  autoComplete="current-password"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button
+          type="submit"
+          className="w-full"
+        >
+          Sign in
+        </Button>
+      </form>
+    </Form>
   )
 }
 

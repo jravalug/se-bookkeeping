@@ -25,10 +25,11 @@ pnpm-lock.yaml
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+.pnpm-debug.log*
 
 # local env files
-.env
 .env*.local
+.env
 
 # vercel
 .vercel
@@ -38,10 +39,13 @@ yarn-error.log*
 next-env.d.ts
 
 # databases
-*.db
 /prisma/*.db
 
+# IDE
+.vscode
+.idea
+
 # other files
-sheats.md
+/src/docs/sheats.md
 /public/designs
 /public/images/ignore

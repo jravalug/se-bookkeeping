@@ -7,7 +7,7 @@ import Credentials from 'next-auth/providers/credentials'
 import { z } from 'zod'
 import { findUserByUsername } from './actions/auth'
 import { authConfig } from './auth.config'
-import db from './prisma/prisma'
+import db from './config/db'
 
 // Function to fetch a user by username from the database
 async function getUser(username: string): Promise<User | null> {

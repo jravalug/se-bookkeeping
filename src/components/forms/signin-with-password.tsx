@@ -56,7 +56,6 @@ const LoginForm = () => {
     })
 
     const res = await authenticate('credentials', formData)
-    console.log(res)
 
     if (res) {
       form.setError('root.serverError', { type: 'authError', message: res })
@@ -66,8 +65,6 @@ const LoginForm = () => {
         variant: 'destructive'
       })
     } else {
-      console.log('success')
-
       router.push('/dashboard')
     }
   }
@@ -78,9 +75,6 @@ const LoginForm = () => {
         onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-4 p-6"
       >
-        {form.formState.errors.root?.serverError.type === 'authError' && (
-          <FormMessage>{form.formState.errors.root?.serverError.message}</FormMessage>
-        )}
         <FormField
           control={form.control}
           name="username"

@@ -2,7 +2,7 @@ import NavLinks from './nav-links'
 
 const SideNav = () => {
   return (
-    <aside className="w-32 mt-10 overflow-auto">
+    <aside className="w-32 moverflow-auto">
       <NavLinks />
     </aside>
   )

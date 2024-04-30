@@ -1,9 +1,9 @@
 import { ThemeProvider } from '@/components/theme-provider'
+import { Toaster } from '@/components/ui/toaster'
 import '@/styles/globals.css'
 import TitleBar from '@components/ui/titlebar'
 import type { Metadata } from 'next'
 import { Inter as FontSans } from 'next/font/google'
-import Providers from './providers'
 
 // const inter = Inter({ subsets: ['latin'] })
 
@@ -36,7 +36,8 @@ const RootLayout = ({
           disableTransitionOnChange
         >
           <TitleBar />
-          <Providers>{children}</Providers>
+          <main className="absolute w-screen h-[calc(100dvh-40px)] top-10">{children}</main>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

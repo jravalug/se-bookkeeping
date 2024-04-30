@@ -1,4 +1,4 @@
-import * as init from '@/data/initData'
+import * as init from '../data/initData'
 import { PrismaClient } from '@prisma/client'
 import bcript from 'bcryptjs'
 import { time, timeEnd } from 'console'
@@ -28,6 +28,8 @@ const seedingConfig = async () => {
     console.log('     ... table paymentMethod deleted  ✅!')
     await prisma.taxType.deleteMany()
     console.log('     ... table taxType deleted  ✅!')
+    await prisma.user.deleteMany()
+    console.log('     ... table user deleted  ✅!')
 
     console.log('')
 
@@ -66,15 +68,13 @@ const seedingConfig = async () => {
     const adminUsername = process.env.ADMIN_USERNAME
     const adminPlainPassword = process.env.ADMIN_PASSWORD
 
-    await prisma.user.createMany({
-      data: [
-        {
-          name: 'Admin',
-          surename: '',
-          username: adminUsername!,
-          password: await bcript.hash(adminPlainPassword!, 10)
-        }
-      ]
+    await prisma.user.create({
+      data: {
+        name: 'Admin',
+        surename: '',
+        username: adminUsername!,
+        password: await bcript.hash(adminPlainPassword!, 10)
+      }
     })
     console.log('     ... seeding table taxType 👍!')
 

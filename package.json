@@ -1,20 +1,39 @@
 {
   "name": "se-bookkeeping",
   "description": "SEBookkeeping (Self-Employed Bookkeeping) is an application that allows a bookkeeper to manage the accounting of self-employed people",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jravalug/se-bookkeeping"
+  },
+  "homepage": "https://se-bookkeeping.vercel.app",
   "author": {
     "name": "Jose Abadia",
     "email": "jravalug@gmail.com"
   },
   "version": "0.1.0",
   "prisma": {
-    "seed": "cross-env NODE_OPTIONS='--inspect' ts-node --compiler-options {\"module\":\"CommonJS\"} ./src/seeds/seed.ts"
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} ./src/seeds/seed.ts"
   },
   "private": false,
   "scripts": {
     "dev": "cross-env NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "postinstall": "pnpm prisma generate",
+    "db:generate": "pnpm prisma generate",
+    "db:migrate": "pnpm prisma migrate dev",
+    "db:push": "pnpm prisma db push",
+    "db:pull": "npx prisma db pull",
+    "db:seed": "npx prisma db seed",
+    "db:reset": "npx prisma migrate reset",
+    "shadcn:add": "pnpm dlx shadcn-ui@latest add",
+    "packages:update-all": "pnpm update --latest",
+    "prettier:format": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache",
+    "prettier:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache",
+    "typecheck": "tsc --noEmit",
+    "lint": "contentlayer build && next lint",
+    "lint:fix": "contentlayer build && next lint --fix"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.0.0",
@@ -39,7 +58,7 @@
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
-    "@types/node": "^20.12.7",
+    "@types/node": "^20.12.8",
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^7.8.0",
@@ -53,7 +72,7 @@
     "postcss": "^8.4.38",
     "prettier": "^3.2.5",
     "prisma": "^5.13.0",
-    "react-icons": "^5.1.0",
+    "react-icons": "^5.2.0",
     "tailwind-merge": "^2.3.0",
     "tailwindcss": "^3.4.3",
     "ts-node": "^10.9.2",

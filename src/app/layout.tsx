@@ -1,5 +1,6 @@
 import TitleBar from '@/components/titlebar'
 import { Toaster } from '@/components/ui/toaster'
+import { cn } from '@/lib/utils'
 import { ThemeProvider } from '@/providers/theme-provider'
 import '@/styles/globals.css'
 import type { Metadata } from 'next'
@@ -28,7 +29,7 @@ const RootLayout = ({
       lang="es"
       suppressHydrationWarning
     >
-      <body className={fontSans.variable}>
+      <body className={cn(fontSans.variable, 'overflow-hidden')}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -36,7 +37,7 @@ const RootLayout = ({
           disableTransitionOnChange
         >
           <TitleBar />
-          <main className="absolute w-screen h-[calc(100dvh-40px)] top-10">{children}</main>
+          <div className="absolute w-screen h-[calc(100dvh-40px)] top-10">{children}</div>
           <Toaster />
         </ThemeProvider>
       </body>

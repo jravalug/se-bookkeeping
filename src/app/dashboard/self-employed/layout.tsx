@@ -1,4 +1,4 @@
-import SideNav from '@/components/nav/sidenav'
+import SideNav from '@/components/nav/client-sidenav'
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (

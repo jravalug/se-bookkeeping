@@ -23,31 +23,19 @@ const Header = () => {
           <span className="sr-only">Acme Inc</span>
         </Link>
         <Link
-          href="#"
+          href="/dashboard"
           className="text-muted-foreground transition-colors hover:text-foreground"
         >
           Dashboard
         </Link>
         <Link
-          href="#"
+          href="/dashboard/self-employed"
           className="text-muted-foreground transition-colors hover:text-foreground"
         >
-          Orders
+          Clients
         </Link>
         <Link
-          href="#"
-          className="text-muted-foreground transition-colors hover:text-foreground"
-        >
-          Products
-        </Link>
-        <Link
-          href="#"
-          className="text-muted-foreground transition-colors hover:text-foreground"
-        >
-          Customers
-        </Link>
-        <Link
-          href="#"
+          href="/dashboard/settings"
           className="text-foreground transition-colors hover:text-foreground"
         >
           Settings

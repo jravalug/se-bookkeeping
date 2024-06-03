@@ -5,23 +5,25 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { twMerge } from 'tailwind-merge'
 
-const links = [
-  { href: '/dashboard/self-employed', label: 'Contribuyente', icon: Icon.Home },
-  { href: '/dashboard/self-employed/incomes', label: 'Incomes', icon: Icon.Incomes },
-  { href: '/dashboard/self-employed/expenses', label: 'Expenses', icon: Icon.Expenses },
-  { href: '/dashboard/self-employed/payroll', label: 'Payroll', icon: Icon.Payroll },
-  { href: '/dashboard/self-employed/taxes', label: 'Taxes', icon: Icon.Taxes },
-  { href: '/dashboard/self-employed/proration', label: 'Proration', icon: Icon.Proration },
-  { href: '/dashboard/self-employed/reports', label: 'Reports', icon: Icon.Reports }
+const clientPath = '/dashboard/self-employed/'
+
+const clientsLinks = [
+  { name: 'Client', href: clientPath, icon: Icon.Home },
+  { name: 'Incomes', href: clientPath + 'incomes', icon: Icon.Incomes },
+  { name: 'Expenses', href: clientPath + 'expenses', icon: Icon.Expenses },
+  { name: 'Payroll', href: clientPath + 'payroll', icon: Icon.Payroll },
+  { name: 'Taxes', href: clientPath + 'taxes', icon: Icon.Taxes },
+  { name: 'Proration', href: clientPath + 'proration', icon: Icon.Proration },
+  { name: 'Reports', href: clientPath + 'reports', icon: Icon.Reports }
 ]
 
 interface NavLinkProps {
+  name: string
   href: string
-  label: string
   icon: React.ComponentType<Icon.IconProps>
 }
 // TODO: move to data
-const NavLink = ({ href, label, icon }: NavLinkProps) => {
+const NavLink = ({ name, href, icon }: NavLinkProps) => {
   const pathname = usePathname()
   const LinkIcon = icon
   return (
@@ -42,7 +44,7 @@ const NavLink = ({ href, label, icon }: NavLinkProps) => {
         <span>
           <LinkIcon />
         </span>
-        <span>{label}</span>
+        <span>{name}</span>
       </Link>
     </div>
   )
@@ -53,12 +55,12 @@ const SideNav = () => {
     <aside className="w-32 moverflow-auto">
       <nav className="h-full flex flex-col justify-between">
         <div>
-          {links.map(({ href, label, icon }) => {
+          {clientsLinks.map(({ name, href, icon }) => {
             return (
               <NavLink
                 key={href}
                 href={href}
-                label={label}
+                name={name}
                 icon={icon}
               />
             )
@@ -67,7 +69,7 @@ const SideNav = () => {
         <div>
           <NavLink
             href="/dashboard/self-employed/settings"
-            label={'Settings'}
+            name={'Settings'}
             icon={Icon.Settings}
           />
         </div>

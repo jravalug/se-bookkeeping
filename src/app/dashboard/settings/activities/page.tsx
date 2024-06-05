@@ -1,115 +1,89 @@
-import Link from 'next/link'
-// import { CircleUser, Menu, Package2, Search } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle
-} from '@/components/ui/card'
-import { Checkbox } from '@/components/ui/checkbox'
-import { Input } from '@/components/ui/input'
+import * as React from 'react'
+import type { Metadata } from 'next'
+import { unstable_noStore as noStore } from 'next/cache'
+import { redirect } from 'next/navigation'
+import type { SearchParams } from '@/types'
+// TODO: Change to prisma ==> import { asc, desc, like, sql } from 'drizzle-orm'
 
-export default function Activities() {
+import { env } from '@/env.mjs'
+// import { db } from '@/config/db'
+import { DEFAULT_UNAUTHENTICATED_REDIRECT } from '@/config/defaults'
+// import { categories, type Category } from '@/db/schema'
+// import { productCategoriesSearchParamsSchema } from '@/validations/params'
+
+import auth from '@/lib/auth'
+
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { DataTableSkeleton } from '@/components/data-table/data-table-skeleton'
+import { ActivitiesTableShell } from '@/components/shells/activities-table-shell'
+import { clientActivitiesSearchParamsSchema } from '@/validations/params'
+import { Activity } from '@prisma/client'
+import {
+  getFilteredActivities,
+  getFilteredActivitiesCount,
+  getFilteredActivitiesRaw
+} from '@/actions/settings/activity'
+
+export const metadata: Metadata = {
+  metadataBase: new URL(env.NEXT_PUBLIC_APP_URL),
+  title: 'Activities',
+  description: 'Manage the activities of self-employed worker.'
+}
+
+interface ActivitiesPageProps {
+  searchParams: SearchParams
+}
+
+export default async function ActivityPage({
+  searchParams
+}: Readonly<ActivitiesPageProps>): Promise<JSX.Element> {
+  const session = await auth()
+  // if (session?.user.role !== 'administrator') redirect(DEFAULT_UNAUTHENTICATED_REDIRECT)
+
+  const { page, per_page, sort, name } = clientActivitiesSearchParamsSchema.parse(searchParams)
+
+  const fallbackPage = isNaN(page) || page < 1 ? 1 : page
+  const limit = isNaN(per_page) ? 10 : per_page
+  const offset = fallbackPage > 0 ? (fallbackPage - 1) * limit : 0
+
+  const [column, order] = (sort?.split('.') as [
+    keyof Activity | undefined,
+    'asc' | 'desc' | undefined
+  ]) ?? ['code', 'desc']
+
+  const filter = {
+    offset: offset,
+    limit: limit,
+    name: name,
+    column: column,
+    order: order
+  }
+
+  noStore()
+  const data = await getFilteredActivitiesRaw(filter)
+
+  noStore()
+  const count = await getFilteredActivitiesCount(name)
+
+  const pageCount = Math.ceil(count / limit)
+
   return (
-    <>
-      <Card x-chunk="dashboard-04-chunk-1">
-        <CardHeader>
-          <CardTitle>Store Name</CardTitle>
-          <CardDescription>Used to identify your store in the marketplace.</CardDescription>
+    <div className="px-2 py-5 sm:pl-14 sm:pr-6">
+      <Card className="rounded-md">
+        <CardHeader className="space-y-1">
+          <CardTitle className="text-xl font-bold tracking-tight md:text-2xl">
+            Self Employed Activities
+          </CardTitle>
         </CardHeader>
         <CardContent>
-          <form>
-            <Input placeholder="Store Name" />
-          </form>
-        </CardContent>
-        <CardFooter className="border-t px-6 py-4">
-          <Button>Save</Button>
-        </CardFooter>
-      </Card>
-      <Card x-chunk="dashboard-04-chunk-2">
-        <CardHeader>
-          <CardTitle>Plugins Directory</CardTitle>
-          <CardDescription>
-            The directory within your project, in which your plugins are located.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form className="flex flex-col gap-4">
-            <Input
-              placeholder="Project Name"
-              defaultValue="/content/plugins"
+          <React.Suspense fallback={<DataTableSkeleton columnCount={4} />}>
+            <ActivitiesTableShell
+              data={data ? data : []}
+              pageCount={pageCount ? pageCount : 0}
             />
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="include"
-                defaultChecked
-              />
-              <label
-                htmlFor="include"
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                Allow administrators to change the directory.
-              </label>
-            </div>
-          </form>
-        </CardContent>
-        <CardFooter className="border-t px-6 py-4">
-          <Button>Save</Button>
-        </CardFooter>
-      </Card>
-      <Card x-chunk="dashboard-04-chunk-2">
-        <CardHeader>
-          <CardTitle>Plugins Directory</CardTitle>
-          <CardDescription>
-            The directory within your project, in which your plugins are located.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form className="flex flex-col gap-4">
-            <Input
-              placeholder="Project Name"
-              defaultValue="/content/plugins"
-            />
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="include"
-                defaultChecked
-              />
-              <label
-                htmlFor="include"
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                Allow administrators to change the directory.
-              </label>
-            </div>
-          </form>
-        </CardContent>
-        <CardFooter className="border-t px-6 py-4">
-          <Button>Save</Button>
-        </CardFooter>
-      </Card>
-      <Card x-chunk="dashboard-04-chunk-2">
-        <CardHeader>Algo</CardHeader>
-        <CardContent>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque incidunt soluta magnam
-          enim nobis ratione sit impedit necessitatibus sapiente mollitia consequuntur dicta
-          dignissimos dolorum, aperiam ea explicabo, iusto voluptatibus quam? Lorem ipsum dolor sit
-          amet consectetur adipisicing elit. Iusto soluta dicta voluptas a cupiditate vel culpa
-          quod, eius molestias repellendus tempora, laudantium laborum omnis error delectus rem,
-          atque quisquam provident! Soluta blanditiis aperiam voluptatem nam nihil. Quia non sequi
-          quae fugit, voluptates eius iste id dolore? Corrupti molestiae veniam aliquid distinctio
-          suscipit, a voluptatum enim assumenda illum consectetur necessitatibus at! Accusantium ex
-          nam vitae? Inventore totam ullam ipsa sit perferendis quam dicta corrupti? Perspiciatis
-          reprehenderit debitis quo rerum sit eius error. Numquam placeat velit cupiditate
-          dignissimos expedita similique alias laudantium! Exercitationem placeat nemo doloremque
-          cumque facilis repudiandae mollitia rem dicta odio iure quasi amet blanditiis porro ad,
-          voluptatem fugiat nostrum perspiciatis excepturi ipsum unde corrupti quos dolor est
-          eligendi. Esse.
+          </React.Suspense>
         </CardContent>
       </Card>
-    </>
+    </div>
   )
 }

@@ -14,19 +14,23 @@ export async function getAllActivities(): Promise<Activity[]> {
   }
 }
 
-export async function getFilteredActivitiesRaw(rawInput: {
+interface getFilteredActivitiesRawProps {
   offset: number
   limit: number
   name: string | undefined
   column: 'code' | 'name' | undefined
   order: 'asc' | 'desc' | undefined
-}): Promise<Activity[]> {
+}
+
+export async function getFilteredActivitiesRaw(
+  rawInput: getFilteredActivitiesRawProps
+): Promise<Activity[]> {
   let sql = `SELECT code, name FROM enum_activities `
 
   if (rawInput.name) sql += `WHERE name LIKE '%${rawInput.name}%' `
 
   sql += `
-    ORDER BY ${rawInput.column} ${rawInput.order === 'asc' ? 'ASC' : 'DESC'}
+    ORDER BY ${rawInput.column} ${rawInput.order?.toUpperCase()}
     LIMIT ${rawInput.limit}
     OFFSET ${rawInput.offset}
   `

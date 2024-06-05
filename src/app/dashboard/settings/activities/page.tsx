@@ -47,16 +47,14 @@ export default async function ActivityPage({
     'asc' | 'desc' | undefined
   ]) ?? ['code', 'asc']
 
-  const filter = {
+  noStore()
+  const data = await getFilteredActivitiesRaw({
     offset: offset,
     limit: limit,
     name: name,
     column: column,
     order: order
-  }
-
-  noStore()
-  const data = await getFilteredActivitiesRaw(filter)
+  })
 
   noStore()
   const count = await getFilteredActivitiesCount(name)

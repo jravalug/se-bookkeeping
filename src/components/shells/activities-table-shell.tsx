@@ -127,12 +127,12 @@ export function ActivitiesTableShell({
                       switch (message) {
                         case 'success':
                           toast({
-                            title: 'The category has been deleted'
+                            title: 'The activity has been deleted'
                           })
                           break
                         default:
                           toast({
-                            title: 'Failed to remove category',
+                            title: 'Failed to remove activity',
                             description: 'Try again',
                             variant: 'destructive'
                           })

@@ -27,12 +27,12 @@ export function DataTablePagination<TData>({
   return (
     <div className="flex w-full flex-col items-center justify-between gap-4 overflow-auto px-2 py-1 sm:flex-row sm:gap-8">
       <div className="flex-1 whitespace-nowrap text-sm text-muted-foreground">
-        zaznaczonych {table.getFilteredSelectedRowModel().rows.length} z{' '}
-        {table.getFilteredRowModel().rows.length} rezerwacji
+        {table.getFilteredSelectedRowModel().rows.length} of{' '}
+        {table.getFilteredRowModel().rows.length} row(s) selected.
       </div>
       <div className="flex flex-col items-center gap-4 sm:flex-row sm:gap-6 lg:gap-8">
         <div className="flex items-center space-x-2">
-          <p className="whitespace-nowrap text-sm font-medium">Liczba rezerwacji na stronę</p>
+          <p className="whitespace-nowrap text-sm font-medium">Rows per page</p>
           <Select
             value={`${table.getState().pagination.pageSize}`}
             onValueChange={(value) => {
@@ -59,7 +59,7 @@ export function DataTablePagination<TData>({
         </div>
         <div className="flex items-center space-x-2">
           <Button
-            aria-label="Przejdź do pierwszej strony z wynikami"
+            aria-label="Go to the first results page"
             variant="outline"
             size="icon"
             className="hidden size-8 lg:flex"
@@ -72,7 +72,7 @@ export function DataTablePagination<TData>({
             />
           </Button>
           <Button
-            aria-label="Przejdź do poprzedniej strony z wynikami"
+            aria-label="Go to the previous results page"
             variant="outline"
             size="icon"
             className="size-8"
@@ -85,7 +85,7 @@ export function DataTablePagination<TData>({
             />
           </Button>
           <Button
-            aria-label="Przejdź do następnej strony z wynikami"
+            aria-label="Go to the next page of results"
             variant="outline"
             size="icon"
             className="size-8"
@@ -98,7 +98,7 @@ export function DataTablePagination<TData>({
             />
           </Button>
           <Button
-            aria-label="Przejdź do ostatniej strony z wynikami"
+            aria-label="Go to the last page of results"
             variant="outline"
             size="icon"
             className="hidden size-8 lg:flex"

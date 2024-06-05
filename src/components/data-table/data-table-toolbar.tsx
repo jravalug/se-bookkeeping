@@ -62,12 +62,12 @@ export function DataTableToolbar<TData>({
           )}
         {isFiltered && (
           <Button
-            aria-label="Zresetuj filtry"
+            aria-label="Reset filters"
             variant="ghost"
             className="h-8 px-2 lg:px-3"
             onClick={() => table.resetColumnFilters()}
           >
-            Zresetuj
+            Reset
             <Cross2Icon
               className="ml-2 size-4"
               aria-hidden="true"
@@ -78,7 +78,7 @@ export function DataTableToolbar<TData>({
       <div className="flex items-center space-x-2">
         {deleteRowsAction && table.getSelectedRowModel().rows.length > 0 ? (
           <Button
-            aria-label="Usuń zaznaczony wiersz"
+            aria-label="Delete the selected row"
             variant="outline"
             size="sm"
             className="h-8"
@@ -94,11 +94,11 @@ export function DataTableToolbar<TData>({
               className="mr-2 size-4"
               aria-hidden="true"
             />
-            Usuń
+            Delete
           </Button>
         ) : newRowLink ? (
           <Link
-            aria-label="Dodaj wiersz"
+            aria-label="Add a row"
             href={newRowLink}
           >
             <div
@@ -114,7 +114,7 @@ export function DataTableToolbar<TData>({
                 className="mr-2 size-4"
                 aria-hidden="true"
               />
-              Dodaj
+              Add
             </div>
           </Link>
         ) : null}

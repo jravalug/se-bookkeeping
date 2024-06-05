@@ -25,20 +25,20 @@ export function DataTableViewOptions<TData>({
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          aria-label="Wybierz kolumny"
+          aria-label="Select columns"
           variant="outline"
           size="sm"
           className="ml-auto hidden h-8 lg:flex"
         >
           <MixerHorizontalIcon className="mr-2 size-4" />
-          Widok
+          View
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="end"
         className="w-[150px]"
       >
-        <DropdownMenuLabel>Wybierz kolumny</DropdownMenuLabel>
+        <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {table
           .getAllColumns()

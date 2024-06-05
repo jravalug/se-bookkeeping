@@ -35,7 +35,7 @@ export function DataTableFacetedFilter<TData, TValue>({
     <Popover>
       <PopoverTrigger asChild>
         <Button
-          aria-label="Filtruj dane"
+          aria-label="Filter data"
           variant="outline"
           size="sm"
           className="h-8 border-dashed"
@@ -63,7 +63,7 @@ export function DataTableFacetedFilter<TData, TValue>({
                     variant="secondary"
                     className="rounded-sm px-1 font-normal"
                   >
-                    wybrano {selectedValues.size}
+                    selected {selectedValues.size}
                   </Badge>
                 ) : (
                   options
@@ -90,7 +90,7 @@ export function DataTableFacetedFilter<TData, TValue>({
         <Command>
           <CommandInput placeholder={title} />
           <CommandList>
-            <CommandEmpty>Brak wyników</CommandEmpty>
+            <CommandEmpty>No results found.</CommandEmpty>
             <CommandGroup>
               {options.map((option) => {
                 const isSelected = selectedValues.has(option.value)
@@ -139,7 +139,7 @@ export function DataTableFacetedFilter<TData, TValue>({
                     onSelect={() => column?.setFilterValue(undefined)}
                     className="justify-center text-center"
                   >
-                    Usuń filtr
+                    Clear filters
                   </CommandItem>
                 </CommandGroup>
               </>

@@ -13,16 +13,12 @@ import { DEFAULT_UNAUTHENTICATED_REDIRECT } from '@/config/defaults'
 
 import auth from '@/lib/auth'
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { DataTableSkeleton } from '@/components/data-table/data-table-skeleton'
 import { ActivitiesTableShell } from '@/components/shells/activities-table-shell'
 import { clientActivitiesSearchParamsSchema } from '@/validations/params'
 import { Activity } from '@prisma/client'
-import {
-  getFilteredActivities,
-  getFilteredActivitiesCount,
-  getFilteredActivitiesRaw
-} from '@/actions/settings/activity'
+import { getFilteredActivitiesCount, getFilteredActivitiesRaw } from '@/actions/settings/activity'
 
 export const metadata: Metadata = {
   metadataBase: new URL(env.NEXT_PUBLIC_APP_URL),
@@ -49,7 +45,7 @@ export default async function ActivityPage({
   const [column, order] = (sort?.split('.') as [
     keyof Activity | undefined,
     'asc' | 'desc' | undefined
-  ]) ?? ['code', 'desc']
+  ]) ?? ['code', 'asc']
 
   const filter = {
     offset: offset,
@@ -68,22 +64,27 @@ export default async function ActivityPage({
   const pageCount = Math.ceil(count / limit)
 
   return (
-    <div className="px-2 py-5 sm:pl-14 sm:pr-6">
-      <Card className="rounded-md">
-        <CardHeader className="space-y-1">
-          <CardTitle className="text-xl font-bold tracking-tight md:text-2xl">
-            Self Employed Activities
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <React.Suspense fallback={<DataTableSkeleton columnCount={4} />}>
-            <ActivitiesTableShell
-              data={data ? data : []}
-              pageCount={pageCount ? pageCount : 0}
-            />
-          </React.Suspense>
-        </CardContent>
-      </Card>
-    </div>
+    <>
+      <div className="px-2 py-5">
+        <Card className="rounded-md">
+          <CardHeader className="space-y-1">
+            <CardTitle className="text-xl font-bold tracking-tight md:text-2xl">
+              Self-Employed Activities
+            </CardTitle>
+            <CardDescription>
+              Full activities list that self-employed workers can carry out
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <React.Suspense fallback={<DataTableSkeleton columnCount={4} />}>
+              <ActivitiesTableShell
+                data={data ? data : []}
+                pageCount={pageCount ? pageCount : 0}
+              />
+            </React.Suspense>
+          </CardContent>
+        </Card>
+      </div>
+    </>
   )
 }

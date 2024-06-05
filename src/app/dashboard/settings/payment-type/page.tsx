@@ -9,9 +9,6 @@ import {
 } from '@/components/ui/card'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
-import { getAllActivities } from '@/actions/settings'
-import { DataTable } from '@/components/data-table/activity/data-tale'
-import { columns } from '@/components/data-table/activity/columns'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -20,17 +17,8 @@ export const metadata: Metadata = {
 }
 
 export default async function Activities() {
-  const activities = await getAllActivities()
-
-  console.log(activities)
-
   return (
     <>
-      <DataTable
-        columns={columns}
-        data={activities}
-      />
-
       <Card x-chunk="dashboard-04-chunk-1">
         <CardHeader>
           <CardTitle>Store Name</CardTitle>

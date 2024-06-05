@@ -14,38 +14,12 @@ export async function getAllActivities(): Promise<Activity[]> {
   }
 }
 
-export async function getFilteredActivities(rawInput: {
-  offset: number
-  limit: number
-  name: string | undefined
-  // sort: []
-}): Promise<Activity[]> {
-  try {
-    const activities = await prisma?.activity.findMany({
-      skip: rawInput.offset,
-      take: rawInput.limit,
-      where: {
-        name: {
-          contains: rawInput.name
-        }
-      },
-      orderBy: {
-        code: 'asc'
-      }
-    })
-    return activities ? activities : []
-  } catch (error) {
-    console.error(error)
-    throw new Error('Activities can`t be fetched.')
-  }
-}
-
 export async function getFilteredActivitiesRaw(rawInput: {
   offset: number
   limit: number
-  column: string
-  order: string
   name: string | undefined
+  column: 'code' | 'name' | undefined
+  order: 'asc' | 'desc' | undefined
 }): Promise<Activity[]> {
   let sql = `SELECT code, name FROM enum_activities `
 
@@ -58,7 +32,7 @@ export async function getFilteredActivitiesRaw(rawInput: {
   `
 
   try {
-    const activities = await prisma?.$queryRawUnsafe(sql)
+    const activities = await prisma?.$queryRawUnsafe<Activity[]>(sql)
     return activities ? activities : []
   } catch (error) {
     console.error(error)

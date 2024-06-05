@@ -7,7 +7,7 @@ import { type ColumnDef } from '@tanstack/react-table'
 
 import { type Activity } from '@prisma/client'
 
-import { useToast } from '@/hooks/use-toast'
+import { toast } from '@/components/ui/use-toast'
 
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -15,10 +15,12 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
 import { DataTable } from '@/components/data-table/data-table'
 import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header'
+import { DotsHorizontalIcon } from '@radix-ui/react-icons'
 
 type AwaitedActivity = Pick<Activity, 'code' | 'name'>
 
@@ -31,7 +33,6 @@ export function ActivitiesTableShell({
   data,
   pageCount
 }: Readonly<ActivitiesTableShellProps>): JSX.Element {
-  const { toast } = useToast()
   const [isPending, startTransition] = React.useTransition()
   const [selectedRowIds, setSelectedRowIds] = React.useState<string[]>([])
 
@@ -94,13 +95,10 @@ export function ActivitiesTableShell({
               <Button
                 aria-label="Expand menu"
                 variant="ghost"
-                className="flex size-8 p-0 data-[state=open]:bg-muted"
+                className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
               >
-                {/* TODO: change icon */}
-                {/* <Icons.dotsHorizontal
-                  className="size-4"
-                  aria-hidden="true"
-                /> */}
+                <DotsHorizontalIcon className="h-4 w-4" />
+                <span className="sr-only">Open menu</span>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent
@@ -111,8 +109,10 @@ export function ActivitiesTableShell({
                 asChild
                 className="cursor-pointer"
               >
-                <Link href={`/dasboard/settings/activities/${row.original.code}`}>Edit</Link>
+                <Link href={`/dasboard/settings/activities/edit/${row.original.code}`}>Edit</Link>
+                {/* TODO: fix edit method */}
               </DropdownMenuItem>
+              <DropdownMenuSeparator />
               <DropdownMenuItem
                 className="cursor-pointer"
                 onClick={() => {
@@ -126,8 +126,9 @@ export function ActivitiesTableShell({
 
                       switch (message) {
                         case 'success':
+                          console.log(message, row.original.code)
                           toast({
-                            title: 'The activity has been deleted'
+                            title: `The activity "${row.original.name}" has been deleted`
                           })
                           break
                         default:
@@ -154,6 +155,7 @@ export function ActivitiesTableShell({
             </DropdownMenuContent>
           </DropdownMenu>
         )
+        // cell: ({ row }) => <DataTableRowActions row={row} />
       }
     ],
     [data, isPending, toast]

@@ -35,7 +35,7 @@ interface DataTableProps<TData, TValue> {
   pageCount: number
   filterableColumns?: DataTableFilterableColumn<TData>[]
   searchableColumns?: DataTableSearchableColumn<TData>[]
-  newRowLink?: string
+  newRowComponent?: React.ElementType
   deleteRowsAction?: React.MouseEventHandler<HTMLButtonElement>
 }
 
@@ -45,7 +45,7 @@ export function DataTable<TData, TValue>({
   pageCount,
   filterableColumns = [],
   searchableColumns = [],
-  newRowLink,
+  newRowComponent,
   deleteRowsAction
 }: DataTableProps<TData, TValue>): JSX.Element {
   const router = useRouter()
@@ -256,7 +256,7 @@ export function DataTable<TData, TValue>({
         table={table}
         filterableColumns={filterableColumns}
         searchableColumns={searchableColumns}
-        newRowLink={newRowLink}
+        newRowComponent={newRowComponent}
         deleteRowsAction={deleteRowsAction}
       />
       <div className="rounded-md border">

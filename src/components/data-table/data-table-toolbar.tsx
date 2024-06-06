@@ -1,13 +1,11 @@
 'use client'
 
 import * as React from 'react'
-import Link from 'next/link'
 import type { DataTableFilterableColumn, DataTableSearchableColumn } from '@/types'
-import { Cross2Icon, PlusCircledIcon, TrashIcon } from '@radix-ui/react-icons'
+import { Cross2Icon, TrashIcon } from '@radix-ui/react-icons'
 import type { Table } from '@tanstack/react-table'
 
-import { cn } from '@/lib/utils'
-import { Button, buttonVariants } from '@/components/ui/button'
+import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { DataTableFacetedFilter } from '@/components/data-table/data-table-faceted-filter'
 import { DataTableViewOptions } from '@/components/data-table/data-table-view-options'
@@ -16,19 +14,21 @@ interface DataTableToolbarProps<TData> {
   table: Table<TData>
   filterableColumns?: DataTableFilterableColumn<TData>[]
   searchableColumns?: DataTableSearchableColumn<TData>[]
-  newRowLink?: string
+  newRowComponent?: React.ElementType
   deleteRowsAction?: React.MouseEventHandler<HTMLButtonElement>
 }
-
+/** Create a react */
 export function DataTableToolbar<TData>({
   table,
   filterableColumns = [],
   searchableColumns = [],
-  newRowLink,
+  newRowComponent,
   deleteRowsAction
 }: DataTableToolbarProps<TData>): JSX.Element {
   const isFiltered = table.getState().columnFilters.length > 0
   const [isPending, startTransition] = React.useTransition()
+
+  const NewRowComponent = newRowComponent as React.ElementType
 
   return (
     <div className="flex w-full items-center justify-between space-x-2 overflow-auto p-1">
@@ -96,27 +96,8 @@ export function DataTableToolbar<TData>({
             />
             Delete
           </Button>
-        ) : newRowLink ? (
-          <Link
-            aria-label="Add a row"
-            href={newRowLink}
-          >
-            <div
-              className={cn(
-                buttonVariants({
-                  variant: 'outline',
-                  size: 'sm',
-                  className: 'h-8'
-                })
-              )}
-            >
-              <PlusCircledIcon
-                className="mr-2 size-4"
-                aria-hidden="true"
-              />
-              Add
-            </div>
-          </Link>
+        ) : newRowComponent ? (
+          <NewRowComponent />
         ) : null}
         <DataTableViewOptions table={table} />
       </div>

@@ -31,6 +31,7 @@ import {
 import { DataTable } from '@/components/data-table/data-table'
 import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header'
 import { DotsHorizontalIcon } from '@radix-ui/react-icons'
+import { AddActivityForm } from '../forms/settings/add-activity-form'
 
 type AwaitedActivity = Pick<Activity, 'code' | 'name'>
 
@@ -246,7 +247,7 @@ export function ActivitiesTableShell({
           title: 'activities'
         }
       ]}
-      newRowLink={`/dashboard/settings/activities/new`}
+      newRowComponent={AddActivityForm}
       deleteRowsAction={() => void deleteSelectedRows()}
     />
   )

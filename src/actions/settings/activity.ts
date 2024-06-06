@@ -1,5 +1,6 @@
 'use server'
 
+import { unstable_noStore as noStore, revalidatePath } from 'next/cache'
 import {
   AddActivityInput,
   DeleteActivityInput,
@@ -7,7 +8,6 @@ import {
   deleteActivitySchema
 } from '@/validations/settings/activity'
 import { type Activity } from '@prisma/client'
-import { revalidatePath } from 'next/cache'
 
 export async function getAllActivities(): Promise<Activity[]> {
   try {
@@ -65,22 +65,44 @@ export async function getFilteredActivitiesCount(rawInput: string | undefined): 
   }
 }
 
-export async function createActivity(
+export async function addActivity(
   rawInput: AddActivityInput
-): Promise<'invalid-input' | 'error' | 'success'> {
+): Promise<'invalid-input' | 'error' | 'exists' | 'success'> {
   try {
     const validatedInput = activitySchema.safeParse(rawInput)
     if (!validatedInput.success) return 'invalid-input'
 
-    const created = await prisma?.activity.create({
+    noStore()
+    const activityTaken = await prisma?.activity.findFirst({
+      where: {
+        OR: [
+          {
+            code: {
+              equals: validatedInput.data.code.toUpperCase()
+            }
+          },
+          {
+            name: {
+              equals: validatedInput.data.name
+            }
+          }
+        ]
+      }
+    })
+
+    if (activityTaken) return 'exists'
+
+    noStore()
+    const newActivity = await prisma?.activity.create({
       data: {
-        code: validatedInput.data.code,
+        code: validatedInput.data.code.toUpperCase(),
         name: validatedInput.data.name
       }
     })
 
+    revalidatePath('/')
     revalidatePath('/dashboard/settings/activities')
-    return created ? 'success' : 'error'
+    return newActivity ? 'success' : 'error'
   } catch (error) {
     console.error(error)
     throw new Error('Activity can`t be created.')

@@ -1,6 +1,11 @@
 'use server'
 
-import { DeleteActivityInput, deleteActivitySchema } from '@/validations/settings/activity'
+import {
+  AddActivityInput,
+  DeleteActivityInput,
+  activitySchema,
+  deleteActivitySchema
+} from '@/validations/settings/activity'
 import { type Activity } from '@prisma/client'
 import { revalidatePath } from 'next/cache'
 
@@ -57,6 +62,49 @@ export async function getFilteredActivitiesCount(rawInput: string | undefined): 
   } catch (error) {
     console.error(error)
     throw new Error('Activities can`t be fetched.')
+  }
+}
+
+export async function createActivity(
+  rawInput: AddActivityInput
+): Promise<'invalid-input' | 'error' | 'success'> {
+  try {
+    const validatedInput = activitySchema.safeParse(rawInput)
+    if (!validatedInput.success) return 'invalid-input'
+
+    const created = await prisma?.activity.create({
+      data: {
+        code: validatedInput.data.code,
+        name: validatedInput.data.name
+      }
+    })
+
+    revalidatePath('/dashboard/settings/activities')
+    return created ? 'success' : 'error'
+  } catch (error) {
+    console.error(error)
+    throw new Error('Activity can`t be created.')
+  }
+}
+
+export async function createActivityTest(): Promise<'invalid-input' | 'error' | 'success'> {
+  const activity = [
+    { code: 'TS1', name: 'Test1' },
+    { code: 'TS2', name: 'Test2' },
+    { code: 'TS3', name: 'Test3' },
+    { code: 'TS4', name: 'Test4' }
+  ]
+
+  try {
+    const created = await prisma?.activity.createMany({
+      data: activity
+    })
+
+    revalidatePath('/dashboard/settings/activities')
+    return created ? 'success' : 'error'
+  } catch (error) {
+    console.error(error)
+    throw new Error('Activity can`t be created.')
   }
 }
 

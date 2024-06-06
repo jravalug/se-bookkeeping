@@ -1,17 +1,17 @@
 import * as React from 'react'
 import type { Metadata } from 'next'
 import { unstable_noStore as noStore } from 'next/cache'
-import { redirect } from 'next/navigation'
+// import { redirect } from 'next/navigation'
 import type { SearchParams } from '@/types'
 // TODO: Change to prisma ==> import { asc, desc, like, sql } from 'drizzle-orm'
 
 import { env } from '@/env.mjs'
 // import { db } from '@/config/db'
-import { DEFAULT_UNAUTHENTICATED_REDIRECT } from '@/config/defaults'
+// import { DEFAULT_UNAUTHENTICATED_REDIRECT } from '@/config/defaults'
 // import { categories, type Category } from '@/db/schema'
 // import { productCategoriesSearchParamsSchema } from '@/validations/params'
 
-import auth from '@/lib/auth'
+// import auth from '@/lib/auth'
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { DataTableSkeleton } from '@/components/data-table/data-table-skeleton'
@@ -33,7 +33,7 @@ interface ActivitiesPageProps {
 export default async function ActivityPage({
   searchParams
 }: Readonly<ActivitiesPageProps>): Promise<JSX.Element> {
-  const session = await auth()
+  // const session = await auth()
   // if (session?.user.role !== 'administrator') redirect(DEFAULT_UNAUTHENTICATED_REDIRECT)
 
   const { page, per_page, sort, name } = clientActivitiesSearchParamsSchema.parse(searchParams)

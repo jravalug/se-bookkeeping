@@ -8,7 +8,17 @@ import { type ColumnDef } from '@tanstack/react-table'
 import { type Activity } from '@prisma/client'
 
 import { toast } from '@/components/ui/use-toast'
-
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger
+} from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import {
@@ -35,6 +45,7 @@ export function ActivitiesTableShell({
 }: Readonly<ActivitiesTableShellProps>): JSX.Element {
   const [isPending, startTransition] = React.useTransition()
   const [selectedRowIds, setSelectedRowIds] = React.useState<string[]>([])
+  const [isOpenMenu, setIsOpenMenu] = React.useState(false)
 
   const columns = React.useMemo<ColumnDef<AwaitedActivity, unknown>[]>(
     () => [
@@ -74,7 +85,7 @@ export function ActivitiesTableShell({
         header: ({ column }) => (
           <DataTableColumnHeader
             column={column}
-            title="Code"
+            title="CODE"
           />
         )
       },
@@ -83,14 +94,14 @@ export function ActivitiesTableShell({
         header: ({ column }) => (
           <DataTableColumnHeader
             column={column}
-            title="Name"
+            title="NAME"
           />
         )
       },
       {
         id: 'actions',
         cell: ({ row }) => (
-          <DropdownMenu>
+          <DropdownMenu onOpenChange={setIsOpenMenu}>
             <DropdownMenuTrigger asChild>
               <Button
                 aria-label="Expand menu"
@@ -113,52 +124,77 @@ export function ActivitiesTableShell({
                 {/* TODO: fix edit method */}
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem
-                className="cursor-pointer"
-                onClick={() => {
-                  startTransition(async () => {
-                    try {
-                      row.toggleSelected(false)
 
-                      const message = await deleteActivity({
-                        code: row.original.code
-                      })
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <DropdownMenuItem
+                    className="cursor-pointer"
+                    onSelect={(e) => e.preventDefault()}
+                    disabled={isPending}
+                  >
+                    Delete
+                  </DropdownMenuItem>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      {`This action cannot be undone. This will permanently delete "${row.original.name}" activity and removed from our servers.`}
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel onClick={() => setIsOpenMenu(false)}>
+                      Cancel
+                    </AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={() => {
+                        startTransition(async () => {
+                          try {
+                            row.toggleSelected(false)
 
-                      switch (message) {
-                        case 'success':
-                          console.log(message, row.original.code)
-                          toast({
-                            title: `The activity "${row.original.name}" has been deleted`
-                          })
-                          break
-                        default:
-                          toast({
-                            title: 'Failed to remove activity',
-                            description: 'Try again',
-                            variant: 'destructive'
-                          })
-                      }
-                    } catch (error) {
-                      console.error(error)
-                      toast({
-                        title: 'Something went wrong',
-                        description: 'Try again',
-                        variant: 'destructive'
-                      })
-                    }
-                  })
-                }}
-                disabled={isPending}
-              >
-                Delete
-              </DropdownMenuItem>
+                            console.log(row.original.code)
+
+                            const message = await deleteActivity({
+                              code: row.original.code
+                            })
+
+                            switch (message) {
+                              case 'success':
+                                toast({
+                                  title: `The activity "${row.original.name}" has been deleted`
+                                })
+                                break
+                              default:
+                                toast({
+                                  title: 'Failed to remove activity',
+                                  description: 'Try again',
+                                  variant: 'destructive'
+                                })
+                            }
+                          } catch (error) {
+                            console.error(error)
+                            toast({
+                              title: 'Something went wrong',
+                              description: 'Try again',
+                              variant: 'destructive'
+                            })
+                          } finally {
+                            setIsOpenMenu(false)
+                          }
+                        })
+                      }}
+                    >
+                      Continue
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </DropdownMenuContent>
           </DropdownMenu>
         )
-        // cell: ({ row }) => <DataTableRowActions row={row} />
       }
     ],
-    [data, isPending, toast]
+    [data, isOpenMenu, isPending] // TODO: fix re-rendering behavior
   )
 
   function deleteSelectedRows() {

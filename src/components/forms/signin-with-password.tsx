@@ -56,13 +56,13 @@ const LoginForm = () => {
       formData.append(key, value)
     })
 
-    const res = await authenticate('credentials', formData)
+    const message = await authenticate('credentials', formData)
 
-    if (res) {
-      form.setError('root.serverError', { type: 'authError', message: res })
+    if (message) {
+      form.setError('root.serverError', { type: 'authError', message: message })
       toast({
         title: 'Sign in error',
-        description: res,
+        description: message,
         variant: 'destructive'
       })
     } else {

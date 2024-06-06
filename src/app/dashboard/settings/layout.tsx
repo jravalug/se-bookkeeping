@@ -3,7 +3,7 @@ import SideNav from '@/components/nav/settings-sidenav'
 const SettingsLayout = ({ children }: React.PropsWithChildren): JSX.Element => {
   return (
     <>
-      <div className="mx-auto grid w-full max-w-6xl items-start gap-6 md:grid-cols-[180px_1fr] lg:grid-cols-[250px_1fr]">
+      <div className="mx-auto grid w-full max-w-6xl items-start gap-6 md:grid-cols-[120px_1fr] lg:grid-cols-[200px_1fr]">
         <div className="flex flex-col gap-4">
           <div className="mx-auto grid w-full max-w-6xl gap-2">
             <h1 className="text-2xl font-semibold">Settings</h1>

@@ -9,6 +9,17 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { DataTableFacetedFilter } from '@/components/data-table/data-table-faceted-filter'
 import { DataTableViewOptions } from '@/components/data-table/data-table-view-options'
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogTrigger,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle
+} from '../ui/alert-dialog'
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>
@@ -77,25 +88,45 @@ export function DataTableToolbar<TData>({
       </div>
       <div className="flex items-center space-x-2">
         {deleteRowsAction && table.getSelectedRowModel().rows.length > 0 ? (
-          <Button
-            aria-label="Delete the selected row"
-            variant="outline"
-            size="sm"
-            className="h-8"
-            onClick={(event) => {
-              startTransition(() => {
-                table.toggleAllPageRowsSelected(false)
-                deleteRowsAction(event)
-              })
-            }}
-            disabled={isPending}
-          >
-            <TrashIcon
-              className="mr-2 size-4"
-              aria-hidden="true"
-            />
-            Delete
-          </Button>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button
+                aria-label="Delete the selected row"
+                variant="outline"
+                size="sm"
+                className="h-8"
+                disabled={isPending}
+              >
+                <TrashIcon
+                  className="mr-2 size-4"
+                  aria-hidden="true"
+                />
+                Delete
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action cannot be undone. This will permanently delete the entries and removed
+                  from our servers.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={(event) => {
+                    startTransition(() => {
+                      table.toggleAllPageRowsSelected(false)
+                      deleteRowsAction(event)
+                    })
+                  }}
+                >
+                  Continue
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         ) : newRowComponent ? (
           <NewRowComponent />
         ) : null}

@@ -140,7 +140,9 @@ export function ActivitiesTableShell({
                   <AlertDialogHeader>
                     <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                     <AlertDialogDescription>
-                      {`This action cannot be undone. This will permanently delete "${row.original.name}" activity and removed from our servers.`}
+                      This action cannot be undone. This will permanently delete &quot;
+                      <span className="text-white">{`${row.original.name}`}</span>&ldquo; activity
+                      and removed from our servers.
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>

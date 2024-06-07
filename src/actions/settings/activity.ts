@@ -4,8 +4,10 @@ import { unstable_noStore as noStore, revalidatePath } from 'next/cache'
 import {
   AddActivityInput,
   DeleteActivityInput,
+  UpdateActivityInput,
   activitySchema,
-  deleteActivitySchema
+  deleteActivitySchema,
+  updateActivitySchema
 } from '@/validations/settings/activity'
 import { type Activity } from '@prisma/client'
 
@@ -109,27 +111,6 @@ export async function addActivity(
   }
 }
 
-export async function createActivityTest(): Promise<'invalid-input' | 'error' | 'success'> {
-  const activity = [
-    { code: 'TS1', name: 'Test1' },
-    { code: 'TS2', name: 'Test2' },
-    { code: 'TS3', name: 'Test3' },
-    { code: 'TS4', name: 'Test4' }
-  ]
-
-  try {
-    const created = await prisma?.activity.createMany({
-      data: activity
-    })
-
-    revalidatePath('/dashboard/settings/activities')
-    return created ? 'success' : 'error'
-  } catch (error) {
-    console.error(error)
-    throw new Error('Activity can`t be created.')
-  }
-}
-
 export async function deleteActivity(
   rawInput: DeleteActivityInput
 ): Promise<'invalid-input' | 'error' | 'success'> {
@@ -148,5 +129,38 @@ export async function deleteActivity(
   } catch (error) {
     console.error(error)
     throw new Error('Activity can`t be deleted.')
+  }
+}
+
+export async function updateActivity(
+  rawInput: UpdateActivityInput
+): Promise<'invalid-input' | 'not-found' | 'error' | 'success'> {
+  try {
+    const validatedInput = updateActivitySchema.safeParse(rawInput)
+    if (!validatedInput.success) return 'invalid-input'
+
+    const exists = await prisma?.activity.findUnique({
+      where: {
+        code: validatedInput.data.code.toUpperCase()
+      }
+    })
+
+    if (!exists) return 'not-found'
+
+    noStore()
+    const updated = await prisma?.activity.update({
+      where: {
+        code: validatedInput.data.code
+      },
+      data: {
+        name: validatedInput.data.name
+      }
+    })
+    revalidatePath('/')
+    revalidatePath('/dashboard/settings/activities')
+    return updated ? 'success' : 'error'
+  } catch (error) {
+    console.error(error)
+    throw new Error('Activity can`t be updated.')
   }
 }

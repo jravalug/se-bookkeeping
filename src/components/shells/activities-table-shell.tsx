@@ -1,7 +1,6 @@
 'use client'
 
 import * as React from 'react'
-import Link from 'next/link'
 import { deleteActivity } from '@/actions/settings/activity'
 import { type ColumnDef } from '@tanstack/react-table'
 
@@ -31,7 +30,8 @@ import {
 import { DataTable } from '@/components/data-table/data-table'
 import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header'
 import { DotsHorizontalIcon } from '@radix-ui/react-icons'
-import { AddActivityForm } from '../forms/settings/add-activity-form'
+import { AddActivityForm } from '@/components/forms/settings/add-activity-form'
+import { UpdateActivityForm } from '../forms/settings/update-activity-form'
 
 type AwaitedActivity = Pick<Activity, 'code' | 'name'>
 
@@ -121,9 +121,9 @@ export function ActivitiesTableShell({
                 asChild
                 className="cursor-pointer"
               >
-                <Link href={`/dasboard/settings/activities/edit/${row.original.code}`}>Edit</Link>
-                {/* TODO: fix edit method */}
+                <UpdateActivityForm activity={row.original} />
               </DropdownMenuItem>
+
               <DropdownMenuSeparator />
 
               <AlertDialog>

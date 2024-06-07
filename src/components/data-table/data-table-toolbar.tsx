@@ -92,7 +92,7 @@ export function DataTableToolbar<TData>({
             <AlertDialogTrigger asChild>
               <Button
                 aria-label="Delete the selected row"
-                variant="outline"
+                variant="destructive"
                 size="sm"
                 className="h-8"
                 disabled={isPending}

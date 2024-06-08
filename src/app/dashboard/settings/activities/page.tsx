@@ -66,9 +66,7 @@ export default async function ActivityPage({
       <div className="px-2 py-5">
         <Card className="rounded-md">
           <CardHeader className="space-y-1">
-            <CardTitle className="text-xl font-bold tracking-tight md:text-2xl">
-              Self-Employed Activities
-            </CardTitle>
+            <CardTitle>Self-Employed Activities</CardTitle>
             <CardDescription>
               Full activities list that self-employed workers can carry out
             </CardDescription>

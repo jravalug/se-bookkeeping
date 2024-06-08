@@ -8,7 +8,10 @@ const settingsPath = '/dashboard/settings'
 
 const clientsLinks = [
   { name: 'General', href: settingsPath },
-  { name: 'Activities', href: settingsPath + '/activities' }
+  { name: 'Activities', href: settingsPath + '/activities' },
+  { name: 'Payments', href: settingsPath + '/payments' },
+  { name: 'Incomes', href: settingsPath + '/incomes' },
+  { name: 'Expenses', href: settingsPath + '/expenses' }
 ]
 
 interface NavLinkProps {
